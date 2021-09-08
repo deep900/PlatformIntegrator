@@ -1,0 +1,33 @@
+/**
+ * 
+ */
+package com.pwc.cell;
+
+import java.util.List;
+
+import lombok.ToString;
+
+/**
+ * Cell is the collection of micro applications that communicate with each other.
+ * 
+ * @author Pradheep
+ *
+ */
+@ToString
+public abstract class Cell {
+	
+	public abstract List<Application> getApplications();
+	
+	/**
+	 * Port number in which the cell will run.
+	 */
+	public int port;
+	
+	/**
+	 * Name of the cell
+	 */
+	public String name;	
+	
+	public String status;
+
+}
