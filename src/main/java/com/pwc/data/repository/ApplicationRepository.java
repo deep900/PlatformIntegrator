@@ -13,4 +13,6 @@ import com.pwc.data.entity.ApplicationEntity;
  */
 public interface ApplicationRepository extends CrudRepository<ApplicationEntity, Integer>{
 	
+	
+	
 }

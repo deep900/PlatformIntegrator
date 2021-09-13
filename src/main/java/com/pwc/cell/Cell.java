@@ -5,6 +5,8 @@ package com.pwc.cell;
 
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 /**
@@ -14,7 +16,11 @@ import lombok.ToString;
  *
  */
 @ToString
+@Getter
+@Setter
 public abstract class Cell {
+	
+	public int id;
 	
 	public abstract List<Application> getApplications();
 	
@@ -26,7 +32,7 @@ public abstract class Cell {
 	/**
 	 * Name of the cell
 	 */
-	public String name;	
+	public String cellname;	
 	
 	public String status;
 

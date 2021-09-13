@@ -12,33 +12,25 @@ import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * @author Pradheep
  *
  */
 @Entity
-@Table(name = "cell")
+@Table(name = "cell_app_mapper")
 @Getter
 @Setter
-@ToString
-public class CellEntity {
-
+public class CellAppMapperEntity {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name = "name")
-	public String cellname;
+	@Column(name="cell_id")
+	private int cellId;
 	
-	@Column(name="port")
-	public int port;
-	
-	/**
-	 * Describes the running status of a cell.
-	 */
-	@Column(name="status")
-	public String status;
-	
+	@Column(name="app_id")
+	private int appId;
+
 }

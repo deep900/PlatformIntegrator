@@ -5,13 +5,22 @@ package com.pwc.cell;
 
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 /**
  * @author Pradheep
  *
  */
+@Getter
+@Setter
+@ToString
 public abstract class Application {
 	
-	public String name;
+	public int id;
+	
+	public String appname;
 	
 	public String httpUrl;
 	
@@ -45,7 +54,7 @@ public abstract class Application {
 	 */
 	public String openAPIDefinitionUrl;
 	
-	public String openAPIDefinitionFile;
+	public byte[] openAPIDefinitionFile;
 	
 	public String status;
 }

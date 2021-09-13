@@ -4,6 +4,7 @@
 package com.pwc.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.pwc.utility.ConversionUtility;
 import com.pwc.utility.ResponseMessage;
@@ -12,6 +13,7 @@ import com.pwc.utility.ResponseMessage;
  * @author Pradheep
  *
  */
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 public class BaseController {
 	
 	@Autowired

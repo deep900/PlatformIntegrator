@@ -1,0 +1,29 @@
+DROP TABLE IF EXISTS cell;
+
+create table cell(
+id int AUTO_INCREMENT PRIMARY KEY,
+name VARCHAR(250) NOT NULL,
+port int not null,
+status varchar(250) NOT NULL
+);
+
+drop table if exists application;
+
+create table application(
+id int AUTO_INCREMENT PRIMARY KEY,
+application_name varchar(250) NOT NULL,
+api_definitions varchar(250) NULL,
+http_url VARCHAR(200) NULL,
+https_url VARCHAR(200) NULL,
+auth_url VARCHAR(200) NULL,
+content_type VARCHAR(200) NULL,
+open_api_file BLOB(2000) NULL,
+status VARCHAR(200) NULL,
+executable_port int);
+
+drop table if exists cell_app_mapper;
+
+create table cell_app_mapper(
+id int AUTO_INCREMENT PRIMARY KEY,
+cell_id INT not null,
+app_id INT not null);

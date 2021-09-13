@@ -29,5 +29,7 @@ public class APIManagerConnector {
 		log.info("Register the application with API Manager");
 		log.info(application.toString());
 	}
+	
+	
 	 
 }
