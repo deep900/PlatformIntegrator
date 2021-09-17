@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
   <classpathentry kind="src" path="src/test/java" output="target/test-classes" including="**/*.java"/>
+  <classpathentry kind="src" path="target/generated-test-sources/test-annotations" output="target/test-classes" including="**/*.java"/>
   <classpathentry kind="src" path="src/test/resources" output="target/test-classes" excluding="**/*.java"/>
   <classpathentry kind="src" path="src/main/java" including="**/*.java"/>
   <classpathentry kind="src" path="target/generated-sources/annotations" including="**/*.java"/>
@@ -63,7 +64,7 @@
   <classpathentry kind="var" path="M2_REPO/com/sun/istack/istack-commons-runtime/3.0.12/istack-commons-runtime-3.0.12.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/sun/activation/jakarta.activation/1.2.2/jakarta.activation-1.2.2.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/data/spring-data-jpa/2.5.1/spring-data-jpa-2.5.1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/springframework/data/spring-data-commons/2.5.1/spring-data-commons-2.5.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/data/spring-data-commons/2.5.1/spring-data-commons-2.5.1.jar" sourcepath="M2_REPO/org/springframework/data/spring-data-commons/2.5.1/spring-data-commons-2.5.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/spring-orm/5.3.7/spring-orm-5.3.7.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/spring-aspects/5.3.7/spring-aspects-5.3.7.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/boot/spring-boot-starter-test/2.5.0/spring-boot-starter-test-2.5.0.jar"/>
@@ -109,4 +110,7 @@
   <classpathentry kind="var" path="M2_REPO/org/projectlombok/lombok/1.18.20/lombok-1.18.20.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/google/code/gson/gson/2.8.8/gson-2.8.8.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/h2database/h2/1.4.200/h2-1.4.200.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/httpcomponents/httpclient/4.5.2/httpclient-4.5.2.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/httpcomponents/httpcore/4.4.14/httpcore-4.4.14.jar"/>
+  <classpathentry kind="var" path="M2_REPO/commons-codec/commons-codec/1.15/commons-codec-1.15.jar"/>
 </classpath>

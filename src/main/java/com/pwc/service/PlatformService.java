@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.pwc.service;
 
 import java.io.BufferedReader;
@@ -12,7 +9,6 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,8 +19,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.pwc.cell.Application;
 import com.pwc.cell.Cell;
@@ -57,12 +51,9 @@ public class PlatformService {
 
 	@Value("${gateway.workspace}")
 	private String workspace;
-	
+
 	@Value("${gateway.basepath}")
 	private String gatewayBasepath;
-
-	@Autowired
-	private RestTemplate restTemplate;
 
 	public boolean createCell(DefaultCell cellObj) {
 		try {
@@ -79,7 +70,6 @@ public class PlatformService {
 	public boolean createApplication(DefaultApplication applicationObj) {
 		try {
 			ApplicationEntity entity = new ApplicationEntity();
-			
 			BeanUtils.copyProperties(applicationObj, entity);
 			entity.setOpenAPIDefinitionFile(new SerialBlob(applicationObj.getOpenAPIDefinitionFile()));
 			this.applicationRepository.save(entity);
@@ -106,10 +96,6 @@ public class PlatformService {
 		return Optional.of(cellEntityRepository.findAll());
 	}
 
-	public boolean publishAPI(Application applicationObj) {
-		return false;
-	}
-
 	public Optional<Iterable<ApplicationEntity>> getAllApplications() {
 		return Optional.of(applicationRepository.findAll());
 	}
@@ -121,10 +107,8 @@ public class PlatformService {
 		if (defaultCell.getCellname() == null || defaultCell.getCellname().isEmpty()) {
 			throw new IllegalArgumentException("Cell name should be valid");
 		}
-		// String[] commands = new String[] {"cmd /c cd " + workspace,"cmd /c
-		// micro-gw init " + defaultCell.getCellname()};
 		String command = new String("cmd /c micro-gw init " + defaultCell.getCellname());
-		executeSystemCommand(command);		
+		executeSystemCommand(command);
 	}
 
 	public void executeSystemCommand(String command) {
@@ -158,13 +142,6 @@ public class PlatformService {
 		executeSystemCommand(command);
 	}
 
-	/**
-	 * Expects the OpenAPI definition URL.
-	 * 
-	 * @param application
-	 * @param cellName
-	 * @throws IllegalArgumentException
-	 */
 	@Async
 	public void addApplicationToGateway(DefaultApplication application, String cellName)
 			throws IllegalArgumentException {
@@ -172,18 +149,17 @@ public class PlatformService {
 		if (cellName == null || cellName.isEmpty()) {
 			throw new IllegalArgumentException("Cell name should be valid");
 		}
-
-		String openAPIURL = application.getOpenAPIDefinitionUrl();
+		if (null == application.getOpenAPIDefinitionUrl()) {
+			throw new IllegalArgumentException("Invalid API specification - Not a valid data");
+		}
 		String command = "cmd /c micro-gw import " + cellName + " -a " + application.getOpenAPIDefinitionUrl();
 		log.info("Printing the command " + command);
 		executeSystemCommand(command);
 	}
 
 	@Async
-	public void addApplicationAPISpecificationToGateway(DefaultApplication application, String cellName)
-			throws IllegalArgumentException {
-		Optional<ApplicationEntity> appObj = getApplication(application.getId());
-		ApplicationEntity applicationObj1 = appObj.get();
+	public void addApplicationAPISpecificationToGateway(ApplicationEntity applicationObj1, String cellName)
+			throws IllegalArgumentException {		
 		log.info("Trying to add the Open API specification: ");
 		Path path = FileSystems.getDefault().getPath(gatewayBasepath + "/" + cellName, "api_definitions",
 				applicationObj1.getAppname() + ".yaml");
@@ -198,25 +174,13 @@ public class PlatformService {
 			log.info("Error while copying the API specification file.", err);
 		} catch (SQLException err) {
 			log.error("SQL exception ", err);
-		}finally {
+		} finally {
 			log.info("Completed writing file ");
 		}
-
 	}
 
 	public Optional<ApplicationEntity> getApplication(int applicationId) {
-		log.info("Printing the application id:" + applicationId);		
+		log.info("Printing the application id:" + applicationId);
 		return this.applicationRepository.findById(applicationId);
 	}
-
-	/**
-	 * curl -X POST
-	 * "https://gateway.api.cloud.wso2.com/api/am/publisher/apis/import-openapi"
-	 * -H "accept: application/json" -H "Content-Type: multipart/form-data" -F
-	 * "file=@car-rental.yaml"
-	 */
-	public void publishTOAPIManager(MultipartFile openAPIFile) {
-
-	}
-
 }

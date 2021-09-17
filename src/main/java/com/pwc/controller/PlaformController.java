@@ -22,6 +22,7 @@ import com.pwc.cell.DefaultApplication;
 import com.pwc.cell.DefaultCell;
 import com.pwc.data.entity.ApplicationEntity;
 import com.pwc.data.entity.CellEntity;
+import com.pwc.service.APIManagerService;
 import com.pwc.service.PlatformService;
 import com.pwc.utility.ResponseMessage;
 
@@ -38,6 +39,9 @@ public class PlaformController extends BaseController {
 
 	@Autowired
 	private PlatformService platformService;
+	
+	@Autowired
+	private APIManagerService apiManagerService;
 
 	@GetMapping("/getCells")
 	public @ResponseBody ResponseMessage getCells() {
@@ -84,8 +88,6 @@ public class PlaformController extends BaseController {
 		}
 	}
 
-	
-
 	@PostMapping("/associateApp")
 	public @ResponseBody ResponseMessage associateApplicationWithCell(@RequestBody CellAppMapper mapper) {
 		log.info("Associating cell with applications" + mapper.toString());
@@ -99,8 +101,16 @@ public class PlaformController extends BaseController {
 	}
 
 	private void postCellAppAssociationProcess(DefaultApplication application, DefaultCell cellInfo) {
-		// Add the application to the micro gateway.		
-		platformService.addApplicationAPISpecificationToGateway(application, cellInfo.getCellname());
+		// Add the application to the micro gateway.	
+		Optional<ApplicationEntity> appObj = platformService.getApplication(application.getId());
+		ApplicationEntity applicationObj1 = appObj.get();
+		platformService.addApplicationAPISpecificationToGateway(applicationObj1, cellInfo.getCellname());
+		try {
+			Thread.currentThread().sleep(4000);
+		} catch (InterruptedException e) {
+			log.error("Interpt error",e);			
+		}
+		apiManagerService.publishTOAPIManager(applicationObj1);
 	}
 	
 	@GetMapping("/buildCell")
